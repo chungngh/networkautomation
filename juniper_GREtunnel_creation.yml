@@ -1,0 +1,17 @@
+---
+- name: configure new GRE tunnel in rtr3
+  hosts: rtr3
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+  
+  - name: configure GRE tunnel
+    junipernetworks.junos.junos_config:
+      lines:
+      - 'set interfaces gr-0/0/0 unit 1 tunnel source 172.16.91.131'
+      - 'set interfaces gr-0/0/0 unit 1 tunnel destination 172.18.85.48'
+      - 'set interfaces gr-0/0/0 unit 1 family inet address 10.201.201.3/24'
+      update: merge
+      
+      
