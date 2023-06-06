@@ -1,0 +1,36 @@
+---
+- name: configure new new BGP in rtr4 to peer rtr3
+  hosts: rtr4
+  gather_facts: false
+
+  tasks:
+
+  - name: configure eBGP v4 peers 
+    arista.eos.eos_bgp:
+      config:
+        bgp_as: 65001
+        router_id: 192.168.4.4
+        neighbors:
+          - neighbor: 10.201.201.3
+            remote_as: 65000
+            ebgp_multihop: 100
+        redistribute: 
+          - protocol: ospf
+            route_map: external
+      operation: merge
+
+  - name: configure BGP address family
+    arista.eos.eos_bgp_address_family:
+      config:
+        as_number: 65001
+        address_family:
+          - afi: "ipv4"
+            neighbor: 
+              - activate: yes
+                peer: 10.201.201.3
+            network:
+              - address: 10.101.101.0/24
+              - address: 10.200.200.0/24
+              - address: 172.18.0.0/16
+              - address: 192.168.3.3/32
+      state: merged

@@ -1,0 +1,24 @@
+---
+- name: configure new BGP config in rtr3
+  hosts: rtr3
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+  
+  - name: configure eBGPv4
+    junipernetworks.junos.junos_config:
+      lines:
+      - 'set policy-options policy-statement ospf-to-ebgp from protocol ospf'
+      - 'set policy-options policy-statement ospf-to-ebgp then accept'
+      - 'set protocols ospf area 0.0.0.0 interface gr-0/0/0.0'
+      - 'set protocols ospf area 0.0.0.0 interface lo0.0 passive'
+      - 'set protocols bgp group external-65001 type external'
+      - 'set protocols bgp group external-65001 local-address 10.201.201.3'
+      - 'set protocols bgp group external-65001 export ospf-to-ebgp'
+      - 'set protocols bgp group external-65001 peer-as 65001'
+      - 'set protocols bgp group external-65001 local-as 65000'
+      - 'set protocols bgp group external-65001 neighbor 10.201.201.4'
+      update: merge
+      
+      

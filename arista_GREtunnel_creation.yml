@@ -1,0 +1,20 @@
+---
+- name: configure new GRE tunnel rtr4
+  hosts: rtr4
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+  
+  - name: configure GRE tunnel
+    arista.eos.eos_config:
+      lines:
+      - 'ip address 10.201.201.4 255.255.255.0'
+      - 'tunnel mode gre'
+      - 'tunnel source interface Ethernet1'
+      - 'tunnel destination 172.16.91.131'
+      - 'tunnel path-mtu-discovery'
+      - 'tunnel ttl 10'
+      parents: interface Tunnel1
+    when: '"rtr4" in inventory_hostname'
+      
