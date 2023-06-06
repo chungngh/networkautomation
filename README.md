@@ -11,13 +11,13 @@ The original lab architecture :
 
 <img width="937" alt="ansible_network_diagram" src="https://github.com/chungngh/networkautomation/assets/93370233/fbb8f639-f56f-4959-98c2-dcecb68bd4de">
 
-rtr1 loopback : 192.168.1.1
+RT1/rtr1 loopback : 192.168.1.1
 
-rtr2 loopback : 192.168.2.2
+RT2/rtr2 loopback : 192.168.2.2
 
-rtr3 loopback : 192.168.3.3
+RT3/rtr3 loopback : 192.168.3.3
 
-rtr4 loopback : 192.168.4.4
+RT4/rtr4 loopback : 192.168.4.4
 
 rtr1:  Cisco router
 
